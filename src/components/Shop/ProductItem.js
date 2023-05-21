@@ -1,15 +1,17 @@
 import { useDispatch } from 'react-redux';
 import Card from '../UI/Card';
 import classes from './ProductItem.module.css';
-import { addToCart } from '../../Reducer/cartItemReducer';
+import { addToServer } from '../../Reducer/cartItemReducer';
+import { setVisible } from '../../Reducer/uiReducer';
 
 const ProductItem = (props) => {
   const dispatch = useDispatch()
   const { title, price, description } = props;
 
   const onAddToCart = () => {
+    dispatch(setVisible("DATA SENDING"))
     const newItem = { title: title, price: price, description: description }
-    dispatch(addToCart(newItem))
+    dispatch(addToServer(newItem))
   }
 
 

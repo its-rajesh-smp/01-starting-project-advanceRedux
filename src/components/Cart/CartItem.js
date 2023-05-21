@@ -1,17 +1,20 @@
 import { useDispatch } from 'react-redux';
 import classes from './CartItem.module.css';
-import { addToCart, deleteFromCart } from '../../Reducer/cartItemReducer';
+import { addToServer, deleteFromServer } from '../../Reducer/cartItemReducer';
+import { setVisible } from '../../Reducer/uiReducer';
 
 const CartItem = (props) => {
   const { title, quantity, total, price } = props.item;
   const dispatch = useDispatch()
 
   const onDeleteFromCart = () => {
-    dispatch(deleteFromCart({ title: title, quantity: quantity }))
+    dispatch(setVisible("DATA SENDING"))
+    dispatch(deleteFromServer(title, quantity))
   }
 
   const onIncreamentBtnClick = () => {
-    dispatch(addToCart({ title }))
+    dispatch(setVisible("DATA SENDING"))
+    dispatch(addToServer({ title: title, quantity: quantity, price: price }))
   }
 
   return (
