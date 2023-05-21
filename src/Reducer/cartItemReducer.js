@@ -128,3 +128,31 @@ export const deleteFromServer = (title, quantity) => {
         }
     }
 }
+
+
+
+export const fetchFormServer = () => {
+    return async (dispatch, getState) => {
+        try {
+            const { data: cartData } = await axios.get('https://sharpener-expensetracker-default-rtdb.asia-southeast1.firebasedatabase.app/cart.json')
+            const { data: totalData } = await axios.get('https://sharpener-expensetracker-default-rtdb.asia-southeast1.firebasedatabase.app/cartTotal.json')
+
+            if (cartData === null || totalData === null) {
+                return
+            }
+
+            dispatch(setVisible("DATA FETCHED"))
+            dispatch(addToCart({ cartItems: cartData, totalCartCounter: totalData }))
+            setTimeout(function () {
+                dispatch(setInvisible())
+            }, 3000);
+
+        } catch (error) {
+            console.log(error);
+            dispatch(setVisible("ERROR"))
+            setTimeout(function () {
+                dispatch(setInvisible())
+            }, 3000);
+        }
+    }
+}
